@@ -167,7 +167,10 @@ function goToStep(nextStep) {
   if (state.step === 3) saveProposal();
   state.step = Math.max(0, Math.min(steps.length - 1, nextStep));
   renderStep();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  const stepHeading = document.querySelector(".stage-intro h2");
+  stepHeading?.setAttribute("tabindex", "-1");
+  stepHeading?.focus({ preventScroll: true });
+  document.querySelector(".stage")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 backButton.addEventListener("click", () => goToStep(state.step - 1));
