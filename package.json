@@ -1,0 +1,11 @@
+{
+  "name": "meridian-signal-to-execution",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "build": "node build.mjs",
+    "test": "node test.mjs"
+  }
+}
