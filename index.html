@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f1f6d" />
+  <title>Meridian Signal to Execution</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="prototype-banner">
+    <span class="prototype-dot"></span>
+    Conceptual prototype · Illustrative data · No live Microsoft integrations
+  </div>
+  <header class="demo-header">
+    <div>
+      <p class="eyebrow">MERIDIAN BEVERAGES · PURCHASING EXECUTION</p>
+      <h1>Signal to execution</h1>
+    </div>
+    <div class="header-actions">
+      <button class="quiet-button" id="resetButton" type="button">Restart demo</button>
+      <div class="meridian-mark" aria-label="Meridian Beverages">M</div>
+    </div>
+  </header>
+
+  <nav class="journey" aria-label="Prototype steps" id="journey"></nav>
+
+  <main id="app" aria-live="polite"></main>
+
+  <footer class="demo-footer">
+    <button class="secondary-button" id="backButton" type="button">Back</button>
+    <div class="step-caption" id="stepCaption"></div>
+    <button class="primary-button" id="nextButton" type="button">Continue</button>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
