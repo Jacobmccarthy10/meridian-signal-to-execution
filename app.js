@@ -111,7 +111,7 @@ function proposalView() {
       <div class="field"><label for="supplier">Supplier</label><select id="supplier">${supplierNames.map(n => `<option ${n === p.supplier ? "selected" : ""}>${n}</option>`).join("")}</select></div>
     </div>
     <div class="field"><label for="rationale">Buyer rationale</label><textarea id="rationale">${escapeHtml(p.rationale)}</textarea></div>
-    <p class="form-hint">These fields drive the guardrail checks on the next screen. Try dropping the quantity below the supplier minimum, or switching to a non-expedited action.</p>
+    <p class="form-hint"><strong>Every field here drives the checks on the next screen.</strong> Try quantity <code>500</code> (blocked — under the supplier minimum), <code>8000</code> (warns on cover, and asks you to record a reason), or action <code>Increase next order</code> (blocked — the required date is not achievable on standard lead time).</p>
   </div></section><aside class="context-panel"><div class="panel-heading"><h3>Available decision context</h3><p>Mocked internal position, assembled around the signal</p></div><div class="panel-body">
     <div class="context-section"><h4>Inventory position · ${scenario.location.name}</h4>
       <div class="context-row"><span>On hand</span><strong>${formatCases(scenario.position.onHandCases)} cases</strong></div>
@@ -307,8 +307,41 @@ function reset() {
   renderStep();
 }
 
+/* ---- Intro overlay ------------------------------------------------------
+   Shown on every open, because this file gets emailed and forwarded and the
+   next person to open it has no context. Dismissible three ways; reopenable
+   from the ? in the header. */
+const introBackdrop = document.querySelector("#introBackdrop");
+const introStart = document.querySelector("#introStart");
+const helpButton = document.querySelector("#helpButton");
+let introOpener = null;
+
+function openIntro(opener) {
+  if (!introBackdrop) return;
+  introOpener = opener || null;
+  introBackdrop.hidden = false;
+  introStart?.focus({ preventScroll: true });
+}
+
+function closeIntro() {
+  if (!introBackdrop || introBackdrop.hidden) return;
+  introBackdrop.hidden = true;
+  (introOpener || nextButton)?.focus({ preventScroll: true });
+  introOpener = null;
+}
+
+introStart?.addEventListener("click", closeIntro);
+helpButton?.addEventListener("click", () => openIntro(helpButton));
+introBackdrop?.addEventListener("click", (event) => {
+  if (event.target === introBackdrop) closeIntro();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeIntro();
+});
+
 backButton.addEventListener("click", () => goToStep(state.step - 1));
 nextButton.addEventListener("click", () => state.step === steps.length - 1 ? reset() : goToStep(state.step + 1));
 resetButton.addEventListener("click", reset);
 
 renderStep();
+openIntro();

@@ -18,6 +18,7 @@
       <h1>Signal to execution</h1>
     </div>
     <div class="header-actions">
+      <button class="quiet-button icon-button" id="helpButton" type="button" aria-label="About this prototype" title="About this prototype">?</button>
       <button class="quiet-button" id="resetButton" type="button">Restart demo</button>
       <div class="meridian-mark" aria-label="Meridian Beverages">M</div>
     </div>
@@ -32,6 +33,40 @@
     <div class="step-caption" id="stepCaption"></div>
     <button class="primary-button" id="nextButton" type="button">Continue</button>
   </footer>
+
+  <div class="intro-backdrop" id="introBackdrop" hidden role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="intro-card">
+      <p class="intro-kicker">MERIDIAN BEVERAGES · PHASE 1 PROTOTYPE</p>
+      <h2 id="introTitle">One purchasing decision, end to end</h2>
+      <p class="intro-lead">A retailer email becomes a Dynamics 365 purchase-order draft without the buyer leaving Outlook, Teams or D365. Seven steps, about two minutes.</p>
+
+      <div class="intro-split">
+        <div class="intro-block real">
+          <h3>What is real</h3>
+          <p>The guardrail engine. Stockout projection, supplier minimums, lead-time feasibility and cover policy are computed from whatever the buyer proposes — so it can refuse, and it will.</p>
+        </div>
+        <div class="intro-block mocked">
+          <h3>What is mocked</h3>
+          <p>All data. Meridian provided none, and none was used. One product, one distribution centre, one week. Every threshold is a placeholder.</p>
+        </div>
+      </div>
+
+      <div class="intro-try">
+        <h3>Worth trying</h3>
+        <p>On step 4, change one field and continue:</p>
+        <ul>
+          <li><b>Quantity 500</b> — blocked, below the supplier minimum</li>
+          <li><b>Quantity 8,000</b> — warns on cover, and makes you record a reason</li>
+          <li><b>Action “Increase next order”</b> — blocked, the date is not achievable</li>
+        </ul>
+      </div>
+
+      <div class="intro-actions">
+        <button class="primary-button" id="introStart" type="button">Start the walkthrough</button>
+        <span class="intro-foot">Nothing here connects to a live system. Press <kbd>Esc</kbd> to close — reopen with <b>?</b> in the header.</span>
+      </div>
+    </div>
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>

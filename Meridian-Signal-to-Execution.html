@@ -260,6 +260,48 @@ code { padding: 1px 5px; border-radius: 4px; background: #eef1f7; color: #35406b
   .proposal-grid, .validation-wrap { grid-template-columns: 1fr; }
   .check { grid-template-columns: 30px minmax(140px, .8fr) minmax(180px, 1fr); }
 }
+
+/* ---- Intro overlay ------------------------------------------------------ */
+.icon-button { width: 34px; height: 34px; padding: 0; border: 1px solid var(--line); border-radius: 50%; font-weight: 700; color: var(--muted); }
+.icon-button:hover { background: var(--panel); color: var(--navy); border-color: #b9c3d4; }
+
+.intro-backdrop { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; background: rgba(9, 20, 56, .58); backdrop-filter: blur(3px); overflow-y: auto; animation: fade .18s ease-out; }
+.intro-backdrop[hidden] { display: none; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.intro-card { width: min(720px, 100%); max-height: calc(100vh - 48px); overflow-y: auto; padding: 30px 34px 26px; border-radius: 12px; background: white; box-shadow: 0 30px 80px rgba(8, 20, 60, .34); animation: rise .22s ease-out; }
+@keyframes rise { from { opacity: .4; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.intro-kicker { margin: 0 0 8px; color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: .07em; }
+.intro-card h2 { margin: 0 0 10px; color: var(--navy); font-size: clamp(22px, 2.4vw, 29px); letter-spacing: -.025em; }
+.intro-lead { margin: 0 0 22px; color: #46536e; font-size: 15px; line-height: 1.55; }
+
+.intro-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.intro-block { padding: 15px 17px; border-radius: 8px; border-left: 4px solid; }
+.intro-block h3 { margin: 0 0 6px; font-size: 12px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.intro-block p { margin: 0; font-size: 13px; line-height: 1.5; }
+.intro-block.real { background: var(--green-soft); border-color: var(--green); }
+.intro-block.real h3 { color: var(--green); }
+.intro-block.real p { color: #1d5744; }
+.intro-block.mocked { background: var(--amber-soft); border-color: #d8b45e; }
+.intro-block.mocked h3 { color: #8a6100; }
+.intro-block.mocked p { color: #6b4d0d; }
+
+.intro-try { padding: 16px 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.intro-try h3 { margin: 0 0 5px; color: var(--navy); font-size: 12px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+.intro-try > p { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+.intro-try ul { margin: 0; padding-left: 18px; color: #3d4a66; font-size: 13px; line-height: 1.75; }
+.intro-try b { color: var(--navy); }
+
+.intro-actions { display: flex; align-items: center; gap: 18px; margin-top: 22px; }
+.intro-actions .primary-button { flex: 0 0 auto; }
+.intro-foot { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.intro-foot kbd { padding: 1px 5px; border: 1px solid #c6cede; border-bottom-width: 2px; border-radius: 4px; background: #f6f8fc; font-family: inherit; font-size: 11px; }
+
+@media (max-width: 700px) {
+  .intro-card { padding: 24px 20px 20px; }
+  .intro-split { grid-template-columns: 1fr; }
+  .intro-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+}
   </style>
 </head>
 <body>
@@ -273,6 +315,7 @@ code { padding: 1px 5px; border-radius: 4px; background: #eef1f7; color: #35406b
       <h1>Signal to execution</h1>
     </div>
     <div class="header-actions">
+      <button class="quiet-button icon-button" id="helpButton" type="button" aria-label="About this prototype" title="About this prototype">?</button>
       <button class="quiet-button" id="resetButton" type="button">Restart demo</button>
       <div class="meridian-mark" aria-label="Meridian Beverages">M</div>
     </div>
@@ -287,6 +330,40 @@ code { padding: 1px 5px; border-radius: 4px; background: #eef1f7; color: #35406b
     <div class="step-caption" id="stepCaption"></div>
     <button class="primary-button" id="nextButton" type="button">Continue</button>
   </footer>
+
+  <div class="intro-backdrop" id="introBackdrop" hidden role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="intro-card">
+      <p class="intro-kicker">MERIDIAN BEVERAGES · PHASE 1 PROTOTYPE</p>
+      <h2 id="introTitle">One purchasing decision, end to end</h2>
+      <p class="intro-lead">A retailer email becomes a Dynamics 365 purchase-order draft without the buyer leaving Outlook, Teams or D365. Seven steps, about two minutes.</p>
+
+      <div class="intro-split">
+        <div class="intro-block real">
+          <h3>What is real</h3>
+          <p>The guardrail engine. Stockout projection, supplier minimums, lead-time feasibility and cover policy are computed from whatever the buyer proposes — so it can refuse, and it will.</p>
+        </div>
+        <div class="intro-block mocked">
+          <h3>What is mocked</h3>
+          <p>All data. Meridian provided none, and none was used. One product, one distribution centre, one week. Every threshold is a placeholder.</p>
+        </div>
+      </div>
+
+      <div class="intro-try">
+        <h3>Worth trying</h3>
+        <p>On step 4, change one field and continue:</p>
+        <ul>
+          <li><b>Quantity 500</b> — blocked, below the supplier minimum</li>
+          <li><b>Quantity 8,000</b> — warns on cover, and makes you record a reason</li>
+          <li><b>Action “Increase next order”</b> — blocked, the date is not achievable</li>
+        </ul>
+      </div>
+
+      <div class="intro-actions">
+        <button class="primary-button" id="introStart" type="button">Start the walkthrough</button>
+        <span class="intro-foot">Nothing here connects to a live system. Press <kbd>Esc</kbd> to close — reopen with <b>?</b> in the header.</span>
+      </div>
+    </div>
+  </div>
 
   <script>
 /* ===== policy.js                   ===== */
@@ -867,7 +944,7 @@ function proposalView() {
       <div class="field"><label for="supplier">Supplier</label><select id="supplier">${supplierNames.map(n => `<option ${n === p.supplier ? "selected" : ""}>${n}</option>`).join("")}</select></div>
     </div>
     <div class="field"><label for="rationale">Buyer rationale</label><textarea id="rationale">${escapeHtml(p.rationale)}</textarea></div>
-    <p class="form-hint">These fields drive the guardrail checks on the next screen. Try dropping the quantity below the supplier minimum, or switching to a non-expedited action.</p>
+    <p class="form-hint"><strong>Every field here drives the checks on the next screen.</strong> Try quantity <code>500</code> (blocked — under the supplier minimum), <code>8000</code> (warns on cover, and asks you to record a reason), or action <code>Increase next order</code> (blocked — the required date is not achievable on standard lead time).</p>
   </div></section><aside class="context-panel"><div class="panel-heading"><h3>Available decision context</h3><p>Mocked internal position, assembled around the signal</p></div><div class="panel-body">
     <div class="context-section"><h4>Inventory position · ${scenario.location.name}</h4>
       <div class="context-row"><span>On hand</span><strong>${formatCases(scenario.position.onHandCases)} cases</strong></div>
@@ -1063,11 +1140,44 @@ function reset() {
   renderStep();
 }
 
+/* ---- Intro overlay ------------------------------------------------------
+   Shown on every open, because this file gets emailed and forwarded and the
+   next person to open it has no context. Dismissible three ways; reopenable
+   from the ? in the header. */
+const introBackdrop = document.querySelector("#introBackdrop");
+const introStart = document.querySelector("#introStart");
+const helpButton = document.querySelector("#helpButton");
+let introOpener = null;
+
+function openIntro(opener) {
+  if (!introBackdrop) return;
+  introOpener = opener || null;
+  introBackdrop.hidden = false;
+  introStart?.focus({ preventScroll: true });
+}
+
+function closeIntro() {
+  if (!introBackdrop || introBackdrop.hidden) return;
+  introBackdrop.hidden = true;
+  (introOpener || nextButton)?.focus({ preventScroll: true });
+  introOpener = null;
+}
+
+introStart?.addEventListener("click", closeIntro);
+helpButton?.addEventListener("click", () => openIntro(helpButton));
+introBackdrop?.addEventListener("click", (event) => {
+  if (event.target === introBackdrop) closeIntro();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeIntro();
+});
+
 backButton.addEventListener("click", () => goToStep(state.step - 1));
 nextButton.addEventListener("click", () => state.step === steps.length - 1 ? reset() : goToStep(state.step + 1));
 resetButton.addEventListener("click", reset);
 
 renderStep();
+openIntro();
   </script>
 </body>
 </html>
