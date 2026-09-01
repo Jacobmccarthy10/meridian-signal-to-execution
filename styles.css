@@ -15,6 +15,9 @@
   --green-soft: #e7f6ef;
   --amber: #a15c00;
   --amber-soft: #fff4ce;
+  --red: #b32218;
+  --red-soft: #fdeceb;
+  --slate: #4a5568;
   --shadow: 0 18px 55px rgba(20, 36, 80, .13);
 }
 
@@ -33,7 +36,7 @@ h1 { margin: 0; color: var(--navy); font-size: clamp(26px, 3vw, 38px); letter-sp
 .quiet-button { border: 0; background: transparent; color: var(--muted); padding: 9px 12px; border-radius: 6px; }
 .quiet-button:hover { background: var(--panel); color: var(--navy); }
 
-.journey { display: grid; grid-template-columns: repeat(6, minmax(105px, 1fr)); max-width: 1320px; margin: 0 auto; padding: 20px 28px 14px; gap: 8px; }
+.journey { display: grid; grid-template-columns: repeat(7, minmax(96px, 1fr)); max-width: 1320px; margin: 0 auto; padding: 20px 28px 14px; gap: 8px; }
 .journey-step { position: relative; border: 0; background: transparent; color: var(--muted); text-align: left; padding: 0 8px 12px; font-size: 12px; }
 .journey-step::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 0; height: 3px; border-radius: 4px; background: #cfd6e3; }
 .journey-step.complete { color: var(--navy); }
@@ -184,7 +187,7 @@ main { min-height: calc(100vh - 252px); padding: 16px 5vw 108px; }
 .step-caption strong { display: block; margin-bottom: 3px; color: var(--navy); font-size: 13px; }
 
 @media (max-width: 900px) {
-  .journey { overflow-x: auto; grid-template-columns: repeat(6, 135px); }
+  .journey { overflow-x: auto; grid-template-columns: repeat(7, 135px); }
   .outlook-layout { grid-template-columns: 48px 1fr; }
   .mail-list { display: none; }
   .teams-layout { grid-template-columns: 56px 1fr; }
@@ -205,4 +208,47 @@ main { min-height: calc(100vh - 252px); padding: 16px 5vw 108px; }
   .check p { grid-column: 2; }
   .demo-footer { grid-template-columns: 95px 1fr 105px; padding-inline: 12px; gap: 8px; }
   .step-caption { display: none; }
+}
+
+/* ---- Guardrail outcome states ------------------------------------------ */
+.check { align-items: start; }
+.check strong { display: block; }
+.check-headline { display: block; margin-top: 4px; font-weight: 500; font-size: 12px; color: var(--muted); }
+.check.pass .check-headline { color: var(--green); }
+.check.warn .check-headline { color: var(--amber); }
+.check.block .check-headline { color: var(--red); }
+.check.block { background: #fffafa; }
+.status-icon.pass { background: var(--green-soft); color: var(--green); }
+.status-icon.warn, .status-icon.warning { background: var(--amber-soft); color: var(--amber); }
+.status-icon.block, .status-icon.blocked { background: var(--red-soft); color: var(--red); }
+.status-icon.info { background: #eef1f6; color: var(--slate); }
+
+.readiness.blocked { background: var(--red-soft); color: #7d1a13; }
+
+.override { margin: 0 18px 18px; padding: 16px 18px; border: 1px solid #e4d3a8; border-radius: 7px; background: #fffdf6; }
+.override label { display: block; margin-bottom: 8px; color: #6b4400; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.override textarea { width: 100%; min-height: 72px; padding: 11px 12px; border: 1px solid #ccb98c; border-radius: 5px; background: white; color: var(--ink); resize: vertical; }
+.override textarea:focus { outline: 2px solid #e8c874; border-color: #b8933f; }
+.override-hint { display: block; margin-top: 7px; color: #8a6d2f; font-size: 12px; }
+.override-hint.ok { color: var(--green); }
+
+.audit-line { display: grid; grid-template-columns: 18px 1fr; gap: 7px; align-items: start; margin-top: 7px; line-height: 1.45; }
+.audit-line span { font-weight: 800; }
+.audit-line.pass span { color: var(--green); }
+.audit-line.warn span { color: var(--amber); }
+.audit-line.block span { color: var(--red); }
+.audit-line.info span { color: var(--slate); }
+.audit-override { margin-top: 12px; padding: 10px 12px; border-left: 3px solid #d8b45e; background: #fffdf6; color: #6b4400; }
+.audit-override strong { display: block; margin-bottom: 3px; }
+
+.form-hint { margin: 4px 0 0; padding: 11px 13px; background: var(--blue-soft); border-radius: 6px; color: #334b88; font-size: 12px; line-height: 1.45; }
+.record-value.wide { grid-column: 1 / -1; border-bottom: 0; background: #fafbfc; border: 1px dashed #aeb8c8; border-radius: 5px; }
+code { padding: 1px 5px; border-radius: 4px; background: #eef1f7; color: #35406b; font-size: .92em; }
+.primary-button:disabled { opacity: .45; cursor: not-allowed; background: #8fa4d8; border-color: #8fa4d8; }
+
+/* The checklist needs real width before it can sit beside the order summary.
+   Below this, stack rather than let the two columns collide. */
+@media (max-width: 1150px) {
+  .proposal-grid, .validation-wrap { grid-template-columns: 1fr; }
+  .check { grid-template-columns: 30px minmax(140px, .8fr) minmax(180px, 1fr); }
 }
