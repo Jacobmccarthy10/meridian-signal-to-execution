@@ -49,22 +49,6 @@ somewhere a CISO can see it.**
 | **Teams** | The surface | The buyer is already here. `Post adaptive card and wait for a response` is a first-party human-in-the-loop approval step with run history. |
 | **Dynamics 365** | The destination | Where POs already live. The workflow prepares a draft; a human submits it. |
 
----
-
-## Where Claude runs, and why that answers the CISO
-
-Claude runs **on Databricks Model Serving, inside the Meridian tenant, under Unity
-Catalog governance.**
-
-Power Automate never sees a prompt. It passes a message reference to Databricks and
-receives a structured result. The reasoning, the data it reasons over, and the audit of
-both stay inside the same perimeter that already holds Meridian's warehouse.
-
-This is deliberate, and it is the reason not to use the Power Platform's built-in
-generative actions. Those route through Microsoft-managed infrastructure, and the
-data-residency story there is more nuanced than this room can afford. Routing the
-reasoning to Databricks keeps the answer to *"where did my data go?"* to one word:
-**nowhere.**
 
 ---
 
@@ -74,7 +58,7 @@ reasoning to Databricks keeps the answer to *"where did my data go?"* to one wor
 |---|---|---|
 | 1 | Retailer email arrives; account manager forwards it to `purchasing-signals@` | Outlook |
 | 2 | Mailbox trigger fires | Power Automate — *When a new email arrives (V3)* |
-| 3 | Parse the open text into a structured signal: product, geography, direction, urgency | Databricks — Claude on Model Serving |
+| 3 | Parse the open text into a structured signal: product, geography, direction, urgency | Databricks |
 | 4 | Assemble the decision context for that SKU × location | Databricks SQL over Unity Catalog |
 | 5 | Post the signal and context to the buyer | Power Automate → Teams *Post adaptive card and wait for a response* |
 | 6 | Buyer enters action, quantity, date, supplier, rationale | Teams adaptive card |
@@ -117,8 +101,6 @@ the build.
   connector combination in one flow. A conversation, not a blocker — but have it early.
 - **Identity.** Service principal versus on-behalf-of for the D365 write. Affects whether
   the audit trail shows the buyer or the workflow as the actor. It should show the buyer.
-- **Model Serving.** Confirm Claude on Databricks Model Serving is enabled in the tenant,
-  and confirm with the CISO that it satisfies the no-egress requirement in writing.
 - **The Monday export.** Contents, grain, refresh timing, identifiers, quality. The
   guardrails are only as good as the position they read.
 - **Environments.** Dev/test/prod Power Platform environments and solution-based
