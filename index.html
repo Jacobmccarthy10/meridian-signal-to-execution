@@ -36,34 +36,30 @@
 
   <div class="intro-backdrop" id="introBackdrop" hidden role="dialog" aria-modal="true" aria-labelledby="introTitle">
     <div class="intro-card">
-      <p class="intro-kicker">MERIDIAN BEVERAGES · PHASE 1 PROTOTYPE</p>
       <h2 id="introTitle">One purchasing decision, end to end</h2>
-      <p class="intro-lead">A retailer email becomes a Dynamics 365 purchase-order draft without the buyer leaving Outlook, Teams or D365. Seven steps, about two minutes.</p>
+      <p class="intro-lead">A retailer email becomes a Dynamics 365 purchase-order draft, without the buyer leaving Outlook, Teams or D365.</p>
 
-      <div class="intro-split">
-        <div class="intro-block real">
-          <h3>What is real</h3>
-          <p>The guardrail engine. Stockout projection, supplier minimums, lead-time feasibility and cover policy are computed from whatever the buyer proposes — so it can refuse, and it will.</p>
+      <dl class="intro-facts">
+        <div>
+          <dt class="real">Real</dt>
+          <dd>The guardrail engine. It computes from what you enter, and it can refuse.</dd>
         </div>
-        <div class="intro-block mocked">
-          <h3>What is mocked</h3>
-          <p>All data. Meridian provided none, and none was used. One product, one distribution centre, one week. Every threshold is a placeholder.</p>
+        <div>
+          <dt class="mocked">Mocked</dt>
+          <dd>All data. One product, one distribution centre, one week.</dd>
         </div>
-      </div>
+      </dl>
 
-      <div class="intro-try">
-        <h3>Worth trying</h3>
-        <p>On step 4, change one field and continue:</p>
-        <ul>
-          <li><b>Quantity 500</b> — blocked, below the supplier minimum</li>
-          <li><b>Quantity 8,000</b> — warns on cover, and makes you record a reason</li>
-          <li><b>Action “Increase next order”</b> — blocked, the date is not achievable</li>
-        </ul>
-      </div>
+      <p class="intro-try-label">Worth trying on step 4</p>
+      <ul class="intro-try">
+        <li><code>500</code> <span>blocked — under the supplier minimum</span></li>
+        <li><code>8000</code> <span>warns on cover, asks you to record a reason</span></li>
+        <li><code>Increase next order</code> <span>blocked — the date is not achievable</span></li>
+      </ul>
 
       <div class="intro-actions">
-        <button class="primary-button" id="introStart" type="button">Start the walkthrough</button>
-        <span class="intro-foot">Nothing here connects to a live system. Press <kbd>Esc</kbd> to close — reopen with <b>?</b> in the header.</span>
+        <button class="primary-button" id="introStart" type="button">Start</button>
+        <span class="intro-foot"><kbd>Esc</kbd> to close · <b>?</b> in the header to reopen</span>
       </div>
     </div>
   </div>
