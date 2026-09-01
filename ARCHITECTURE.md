@@ -17,7 +17,7 @@ somewhere a CISO can see it.**
 ║   ┌────────────┐      ┌──────────────────────────────────────────────┐      ║
 ║   │  Outlook   │      │  AZURE DATABRICKS  ·  Unity Catalog          │      ║
 ║   │  shared    │      │                                              │      ║
-║   │  mailbox   │      │  • Signal parsing (Claude on Model Serving)  │      ║
+║   │  mailbox   │      │  • Signal parsing      ║
 ║   └─────┬──────┘      │  • Inventory / demand / supplier context     │      ║
 ║         │             │  • Guardrail evaluation  ← guardrails.js     │      ║
 ║         │ trigger     │  • Audit log (Delta table)                   │      ║
