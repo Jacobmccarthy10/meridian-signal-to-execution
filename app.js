@@ -246,7 +246,7 @@ function advanceCaption() {
 
 function updateFooter() {
   nextButton.disabled = state.step === VALIDATE_STEP && !canAdvance();
-  nextButton.textContent = ["Open forwarding action", "Send and open Teams", "Review purchasing action", "Validate proposal", "Continue to confirmation", "Confirm and prepare draft", "Restart demo"][state.step];
+  nextButton.textContent = ["Open forwarding action", "Send and open Teams", "Review purchasing action", "Validate proposal", "Continue to confirmation", "Confirm and prepare draft", "Why this works"][state.step];
   stepCaption.innerHTML = `<strong>Step ${state.step + 1} of ${steps.length}</strong>${escapeHtml(state.step === VALIDATE_STEP ? advanceCaption() : steps[state.step].title)}`;
 
   const hint = document.querySelector("#overrideHint");
@@ -307,41 +307,58 @@ function reset() {
   renderStep();
 }
 
-/* ---- Intro overlay ------------------------------------------------------
-   Shown on every open, because this file gets emailed and forwarded and the
-   next person to open it has no context. Dismissible three ways; reopenable
-   from the ? in the header. */
+/* ---- Overlays -----------------------------------------------------------
+   Two bookends. The intro shows on every open, because this file gets emailed
+   and forwarded and the next person to open it has no context. The outro is
+   reached from the footer on the final step, so it never covers the draft
+   screen the walkthrough was building towards. Both dismiss three ways. */
 const introBackdrop = document.querySelector("#introBackdrop");
 const introStart = document.querySelector("#introStart");
+const outroBackdrop = document.querySelector("#outroBackdrop");
+const outroRestart = document.querySelector("#outroRestart");
 const helpButton = document.querySelector("#helpButton");
-let introOpener = null;
+let overlayOpener = null;
 
-function openIntro(opener) {
-  if (!introBackdrop) return;
-  introOpener = opener || null;
-  introBackdrop.hidden = false;
-  introStart?.focus({ preventScroll: true });
+function openOverlay(backdrop, focusTarget, opener) {
+  if (!backdrop) return;
+  closeOverlays();
+  overlayOpener = opener || null;
+  backdrop.hidden = false;
+  focusTarget?.focus({ preventScroll: true });
 }
 
-function closeIntro() {
-  if (!introBackdrop || introBackdrop.hidden) return;
-  introBackdrop.hidden = true;
-  (introOpener || nextButton)?.focus({ preventScroll: true });
-  introOpener = null;
+function closeOverlays() {
+  let closed = false;
+  for (const backdrop of [introBackdrop, outroBackdrop]) {
+    if (backdrop && !backdrop.hidden) { backdrop.hidden = true; closed = true; }
+  }
+  if (!closed) return;
+  (overlayOpener || nextButton)?.focus({ preventScroll: true });
+  overlayOpener = null;
 }
 
-introStart?.addEventListener("click", closeIntro);
+const openIntro = (opener) => openOverlay(introBackdrop, introStart, opener);
+const openOutro = (opener) => openOverlay(outroBackdrop, outroRestart, opener);
+
+introStart?.addEventListener("click", closeOverlays);
 helpButton?.addEventListener("click", () => openIntro(helpButton));
-introBackdrop?.addEventListener("click", (event) => {
-  if (event.target === introBackdrop) closeIntro();
-});
+outroRestart?.addEventListener("click", () => { closeOverlays(); reset(); });
+
+for (const backdrop of [introBackdrop, outroBackdrop]) {
+  backdrop?.addEventListener("click", (event) => {
+    if (event.target === backdrop) closeOverlays();
+  });
+}
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeIntro();
+  if (event.key === "Escape") closeOverlays();
 });
 
 backButton.addEventListener("click", () => goToStep(state.step - 1));
-nextButton.addEventListener("click", () => state.step === steps.length - 1 ? reset() : goToStep(state.step + 1));
-resetButton.addEventListener("click", reset);
+nextButton.addEventListener("click", () => {
+  if (state.step === steps.length - 1) openOutro(nextButton);
+  else goToStep(state.step + 1);
+});
+resetButton.addEventListener("click", () => { closeOverlays(); reset(); });
 
 renderStep();
 openIntro();
