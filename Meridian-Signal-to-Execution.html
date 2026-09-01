@@ -276,12 +276,10 @@ code { padding: 1px 5px; border-radius: 4px; background: #eef1f7; color: #35406b
 .intro-card h2 { margin: 0 0 14px; color: var(--navy); font-size: 26px; font-weight: 600; letter-spacing: -.03em; line-height: 1.22; }
 .intro-lead { margin: 0 0 30px; color: #5b6780; font-size: 14.5px; line-height: 1.62; }
 
-.intro-facts { margin: 0 0 30px; padding: 22px 0; border-top: 1px solid #eef1f6; border-bottom: 1px solid #eef1f6; display: grid; gap: 13px; }
-.intro-facts > div { display: grid; grid-template-columns: 74px 1fr; gap: 14px; align-items: baseline; }
-.intro-facts dt { margin: 0; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.intro-facts dt.real { color: var(--green); }
-.intro-facts dt.mocked { color: var(--amber); }
-.intro-facts dd { margin: 0; color: #46536e; font-size: 13.5px; line-height: 1.55; }
+.intro-statement { margin: 0 0 30px; padding: 22px 0; border-top: 1px solid #eef1f6; border-bottom: 1px solid #eef1f6; }
+.intro-claim { margin: 0 0 9px; color: var(--ink); font-size: 14.5px; font-weight: 600; line-height: 1.55; }
+.intro-claim em { font-style: normal; color: var(--green); }
+.intro-caveat { margin: 0; color: #8d97ab; font-size: 13px; line-height: 1.55; }
 
 .intro-try-label { margin: 0 0 14px; color: var(--muted); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .intro-try { margin: 0 0 32px; padding: 0; list-style: none; display: grid; gap: 11px; }
@@ -298,7 +296,6 @@ code { padding: 1px 5px; border-radius: 4px; background: #eef1f7; color: #35406b
 @media (max-width: 620px) {
   .intro-card { padding: 30px 24px 26px; }
   .intro-card h2 { font-size: 22px; }
-  .intro-facts > div { grid-template-columns: 1fr; gap: 3px; }
   .intro-actions { flex-direction: column; align-items: stretch; gap: 14px; }
 }
   </style>
@@ -335,16 +332,10 @@ code { padding: 1px 5px; border-radius: 4px; background: #eef1f7; color: #35406b
       <h2 id="introTitle">One purchasing decision, end to end</h2>
       <p class="intro-lead">A retailer email becomes a Dynamics 365 purchase-order draft, without the buyer leaving Outlook, Teams or D365.</p>
 
-      <dl class="intro-facts">
-        <div>
-          <dt class="real">Real</dt>
-          <dd>The guardrail engine. It computes from what you enter, and it can refuse.</dd>
-        </div>
-        <div>
-          <dt class="mocked">Mocked</dt>
-          <dd>All data. One product, one distribution centre, one week.</dd>
-        </div>
-      </dl>
+      <div class="intro-statement">
+        <p class="intro-claim">The guardrails are <em>live</em>. They compute from what you enter, and they can refuse.</p>
+        <p class="intro-caveat">Every number is illustrative — Meridian provided no data.</p>
+      </div>
 
       <p class="intro-try-label">Worth trying on step 4</p>
       <ul class="intro-try">
