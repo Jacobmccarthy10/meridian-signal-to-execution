@@ -1,14 +1,13 @@
 /**
- * Purchasing guardrail policy.
- *
- * EVERY VALUE IN THIS FILE IS A PLACEHOLDER.
+ * Purchasing guardrail policy. EVERY VALUE IN THIS FILE IS A PLACEHOLDER.
  *
  * These are not Meridian's rules. They are illustrative stand-ins that let the
  * guardrail engine run end to end. The engine is the deliverable; these numbers
  * are configuration, and week one with a buyer and the Demand/Supply Planning
  * owner replaces them. Nothing in the evaluation logic changes when they do.
- *
- * Severity decides what a failed check does:
+ 
+ 
+ *Severity decides what a failed check does:
  *   "block" — the D365 draft cannot be prepared until the proposal changes.
  *   "warn"  — the buyer may proceed, but must record a reason, which is
  *             carried into the audit record.
