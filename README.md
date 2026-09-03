@@ -68,11 +68,6 @@ was.
 | `guardrails.js` | the engine — pure functions, no DOM, no network, so the same code runs in the browser and under Node |
 | `policy.js` | thresholds, and which rules block versus warn. All placeholders |
 | `scenario.js` | the mocked inventory position. All invented |
-| `test.mjs` | 40 checks, most of them against the engine |
-
-```
-node test.mjs
-```
 
 No dependencies and nothing to install. Opening `index.html` needs a local server, since
 it loads ES modules — the hosted link above is easier.
